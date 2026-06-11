@@ -1,0 +1,33 @@
+{
+  "name": "prior-auth-ambient-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "subscriber": "tsx src/subscriber/server.ts",
+    "review-api": "tsx src/review-api/server.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "setup-emulator": "tsx scripts/setup-emulator.ts",
+    "publish-scenario": "tsx scripts/publish-scenario.ts",
+    "publish-batch": "tsx scripts/publish-batch.ts"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.9.0",
+    "@google-cloud/pubsub": "^4.9.0",
+    "@google-cloud/vertexai": "^1.9.0",
+    "@langchain/langgraph": "^0.2.36",
+    "express": "^4.21.2",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.0",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+dist/
+.env
+*.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+*.tfstate*
+*-service-account-key.json
+data/mock-audit-log.jsonl
+tfplan

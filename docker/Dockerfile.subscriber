@@ -1,0 +1,33 @@
+# ── Stage 1: install dependencies ───────────────────────────────────────────
+FROM oven/bun:1-slim AS deps
+
+WORKDIR /app
+
+COPY package.json bun.lockb* ./
+RUN bun install --frozen-lockfile
+
+# ── Stage 2: production image ────────────────────────────────────────────────
+FROM oven/bun:1-slim AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production \
+    SUBSCRIBER_PORT=8080 \
+    MOCK_LLM=false \
+    MOCK_BQ=false \
+    CONFIDENCE_THRESHOLD=0.80 \
+    VERTEX_AI_LOCATION=us-central1 \
+    GEMINI_MODEL=gemini-2.0-flash
+
+# Copy deps from previous stage (includes node_modules with all packages)
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy source
+COPY package.json tsconfig.json ./
+COPY src/ ./src/
+COPY data/ ./data/
+
+EXPOSE 8080
+
+# Bun runs TypeScript natively — no compile step needed
+CMD ["bun", "src/subscriber/server.ts"]

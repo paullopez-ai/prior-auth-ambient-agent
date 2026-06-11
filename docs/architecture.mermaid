@@ -1,0 +1,44 @@
+graph TD
+    PUB["Publisher\n(test script or external system)"]
+    TOPIC["Cloud Pub/Sub Topic\nprior-auth-requests"]
+    SUB["Cloud Run: Subscriber Service\nport 8080\nprior-auth-ambient-agent"]
+    VALID["Zod Schema Validation\nPriorAuthRequestMessage v1.0"]
+    REJECT["HTTP 400 → Terminal Reject\n(Pub/Sub does not retry)"]
+
+    subgraph PIPELINE["LangGraph StateGraph (per message)"]
+        EVAL["CriteriaEvalNode\nVertex AI Gemini 2.0 Flash\nStructured JSON output"]
+        ROUTE["ConfidenceRoutingNode\nPure logic · No external calls\nThreshold: 0.80"]
+        AUDIT["AuditWriteNode\nBigQuery write\naudit_records table"]
+    end
+
+    AA["Determination: AUTO_APPROVE\nconfidence ≥ 0.80"]
+    HR["Determination: HUMAN_REVIEW\nconfidence < 0.80"]
+
+    BQ_AUDIT["BigQuery Dataset\naudit_records\nevery message"]
+    BQ_QUEUE["BigQuery Dataset\nhuman_review_queue\nsub-threshold only"]
+
+    REVIEW_API["Cloud Run: Human Review API\nport 8081\nprior-auth-review-api"]
+    UI["UI: prior-auth-ambient-agent-ui\nNext.js · localhost:3000\n/  Agent Dashboard\n/queue  Human Review Queue\n/audit  BigQuery Audit Trail"]
+
+    PUB -->|"publishes PriorAuthRequestMessage"| TOPIC
+    TOPIC -->|"HTTPS push subscription"| SUB
+    SUB --> VALID
+    VALID -->|"invalid schema"| REJECT
+    VALID -->|"valid message"| EVAL
+    EVAL --> ROUTE
+    ROUTE -->|"confidence ≥ 0.80"| AA
+    ROUTE -->|"confidence < 0.80"| HR
+    AA --> AUDIT
+    HR --> AUDIT
+    AUDIT -->|"always writes"| BQ_AUDIT
+    HR -->|"also writes"| BQ_QUEUE
+    BQ_AUDIT --> REVIEW_API
+    BQ_QUEUE --> REVIEW_API
+    REVIEW_API -->|"GET /audit\nGET /review-queue\nPOST /review-queue/:id/decision"| UI
+
+    style PIPELINE fill:#1e293b,stroke:#3b82f6,color:#f1f5f9
+    style REJECT fill:#7f1d1d,stroke:#ef4444,color:#fef2f2
+    style AA fill:#14532d,stroke:#22c55e,color:#f0fdf4
+    style HR fill:#78350f,stroke:#f59e0b,color:#fffbeb
+    style BQ_AUDIT fill:#1e3a5f,stroke:#3b82f6,color:#dbeafe
+    style BQ_QUEUE fill:#1e3a5f,stroke:#3b82f6,color:#dbeafe

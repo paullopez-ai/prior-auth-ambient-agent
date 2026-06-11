@@ -1,0 +1,74 @@
+{
+  "scenario-1-auto-approve": {
+    "determination": "AUTO_APPROVE",
+    "confidence": 0.91,
+    "rationale": "Office visit (CPT 99213) for acute upper respiratory infection (J06.9) meets medical necessity criteria for commercial plan. Documentation is complete with appropriate diagnosis and clinical justification for level of service.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 512,
+    "completion_tokens": 87,
+    "cost_usd": 0.0000648
+  },
+  "scenario-2-human-review": {
+    "determination": "HUMAN_REVIEW",
+    "confidence": 0.67,
+    "rationale": "Total knee arthroplasty (CPT 27447) for osteoarthritis (M17.11) under Medicare Advantage requires additional documentation of failed conservative treatments. Clinical notes indicate prior PT but lack specific duration and outcome metrics required by CMS guidelines.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 648,
+    "completion_tokens": 112,
+    "cost_usd": 0.0000822
+  },
+  "scenario-4-batch-approve-1": {
+    "determination": "AUTO_APPROVE",
+    "confidence": 0.88,
+    "rationale": "Procedure meets medical necessity criteria with complete supporting documentation.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 490,
+    "completion_tokens": 64,
+    "cost_usd": 0.0000559
+  },
+  "scenario-4-batch-approve-2": {
+    "determination": "AUTO_APPROVE",
+    "confidence": 0.93,
+    "rationale": "Diagnosis codes clinically justify the requested procedure. Documentation complete.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 510,
+    "completion_tokens": 58,
+    "cost_usd": 0.0000555
+  },
+  "scenario-4-batch-approve-3": {
+    "determination": "AUTO_APPROVE",
+    "confidence": 0.85,
+    "rationale": "Clinical notes support medical necessity with adequate documentation of failed conservative care.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 525,
+    "completion_tokens": 71,
+    "cost_usd": 0.0000607
+  },
+  "scenario-4-batch-review-1": {
+    "determination": "HUMAN_REVIEW",
+    "confidence": 0.72,
+    "rationale": "Procedure requires additional documentation. Clinical notes mention prior treatment but lack specificity required by plan guidelines.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 612,
+    "completion_tokens": 95,
+    "cost_usd": 0.0000747
+  },
+  "scenario-4-batch-review-2": {
+    "determination": "HUMAN_REVIEW",
+    "confidence": 0.58,
+    "rationale": "Insufficient documentation of medical necessity. Conservative treatment history not adequately documented per plan requirements.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 588,
+    "completion_tokens": 102,
+    "cost_usd": 0.0000749
+  },
+  "default": {
+    "determination": "HUMAN_REVIEW",
+    "confidence": 0.70,
+    "rationale": "Default mock response: routing to human review for manual evaluation.",
+    "model_version": "gemini-2.0-flash",
+    "prompt_tokens": 500,
+    "completion_tokens": 80,
+    "cost_usd": 0.0000615
+  }
+}
