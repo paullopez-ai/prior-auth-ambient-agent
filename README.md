@@ -85,6 +85,8 @@ GCP PROJECT: prior-auth-ambient-agent
     /audit     → BigQuery Audit Trail
 ```
 
+![Architecture](architecture.png)
+
 The subscriber service is the ambient activation layer. It is always
 listening. When a Pub/Sub push arrives, it validates the message schema,
 instantiates a fresh LangGraph pipeline, and processes the event. The
