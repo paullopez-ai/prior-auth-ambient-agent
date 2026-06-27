@@ -10,3 +10,4 @@ terraform.tfstate.backup
 *-service-account-key.json
 data/mock-audit-log.jsonl
 tfplan
+docs/interview-demo-guide.md

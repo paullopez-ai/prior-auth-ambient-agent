@@ -392,8 +392,7 @@ prior-auth-ambient-agent/
 │   ├── mock-responses.json          # Deterministic Gemini fixtures
 │   └── scenarios.json               # Five scenario payloads
 ├── docs/
-│   ├── architecture.mermaid         # System diagram (Mermaid graph TD)
-│   └── interview-demo-guide.md      # 5-minute demo walkthrough
+│   └── architecture.mermaid         # System diagram (Mermaid graph TD)
 ├── infra/terraform/                 # GCP infrastructure (Terraform)
 ├── docker/                          # Dockerfiles for Cloud Run
 └── tests/
@@ -401,13 +400,6 @@ prior-auth-ambient-agent/
     ├── pipeline/                    # Node unit tests
     └── contracts/                   # Zod schema tests
 ```
-
----
-
-## Interview Demo Guide
-
-See [`docs/interview-demo-guide.md`](docs/interview-demo-guide.md) for the five-scenario
-15-minute walkthrough script.
 
 ---
 
